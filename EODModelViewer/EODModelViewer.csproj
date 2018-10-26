@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ModelDataService.cs" />
     <Compile Include="ModelService.cs" />
+    <Compile Include="Models\IconItems.cs" />
     <Compile Include="Models\IModelObject.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Mob.cs" />

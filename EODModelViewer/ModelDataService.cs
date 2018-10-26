@@ -12,7 +12,7 @@ namespace EODModelViewer
     {
         public async Task<Dictionary<string, List<IModelObject>>> ParseData(Dictionary<string, string> data)
         {
-            if (!data.ContainsKey("items.json") || !data.ContainsKey("mobs.json"))
+            if (!data.ContainsKey("items.json") || !data.ContainsKey("mobs.json") || !data.ContainsKey("iconitems.json"))
             {
                 return null;
             }
@@ -25,18 +25,23 @@ namespace EODModelViewer
             var mobsTask = Task.Run(() =>
                 Mob.ParseMobs(data["mobs.json"]).Select(x => x as IModelObject).ToList());
 
+            var iconTask = Task.Run(() =>
+                IconItems.ParseInventoryIcons(data["iconitems.json"]).Select(x => x as IModelObject).ToList());
+
             var items = await itemsTask;
             var mobs = await mobsTask;
+            var iconItems = await iconTask;
 
             parsedData.Add("items", items);
             parsedData.Add("mobs", mobs);
+            parsedData.Add("iconitems", iconItems);
 
             return parsedData;
         }
 
         public async Task<Dictionary<string, string>> GetData()
         {
-            if (!File.Exists("./EODModelViewer/data/items.json") || !File.Exists("./EODModelViewer/data/items.json"))
+            if (!File.Exists("./EODModelViewer/data/items.json") || !File.Exists("./EODModelViewer/data/items.json") || !File.Exists("./EODModelViewer/data/iconitems.json"))
             {
                 return await DownloadDataAsync();
             }
@@ -44,7 +49,8 @@ namespace EODModelViewer
             var data = new Dictionary<string, string>
             {
                 {"items.json", File.ReadAllText("./EODModelViewer/data/items.json")},
-                {"mobs.json", File.ReadAllText("./EODModelViewer/data/mobs.json")}
+                {"mobs.json", File.ReadAllText("./EODModelViewer/data/mobs.json")},
+                {"inventory.json", File.ReadAllText("./EODModelViewer/data/iconitems.json")}
             };
 
             return data;
