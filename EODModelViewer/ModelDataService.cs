@@ -41,7 +41,7 @@ namespace EODModelViewer
 
         public async Task<Dictionary<string, string>> GetData()
         {
-            if (!File.Exists("./EODModelViewer/data/items.json") || !File.Exists("./EODModelViewer/data/items.json") || !File.Exists("./EODModelViewer/data/iconitems.json"))
+            if (!File.Exists("./EODModelViewer/data/items.json") || !File.Exists("./EODModelViewer/data/mobs.json") || !File.Exists("./EODModelViewer/data/iconitems.json"))
             {
                 return await DownloadDataAsync();
             }
